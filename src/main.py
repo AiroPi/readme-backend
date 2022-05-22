@@ -6,6 +6,8 @@ from fastapi.responses import FileResponse, RedirectResponse
 
 from .connect4_image_generator import generate_image
 
+GITHUB_PROFILE_URL = "https://github.com/AiroPi"
+
 app = FastAPI()
 c4 = Connect4()
 if not os.path.exists("./data/"):
@@ -15,7 +17,7 @@ generate_image(c4, "./data/connect4.png")
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return RedirectResponse(GITHUB_PROFILE_URL)
 
 
 @app.get("/image")
@@ -27,6 +29,14 @@ def get_image():
 def play(
     column: int = Query(title="The column ID you want to play to.", ge=0, le=6)
 ):
-    c4.play(column)
+    if not c4.is_over:
+        c4.play(column)
+        generate_image(c4, "./data/connect4.png")
+    return RedirectResponse(GITHUB_PROFILE_URL)
+
+
+@app.get("/reset")
+def reset():
+    c4.reset()
     generate_image(c4, "./data/connect4.png")
-    return RedirectResponse("https://gist.github.com/AiroPi/ae65bc8ca2a44ff8c286d18630a4c3dd")
+    return RedirectResponse(GITHUB_PROFILE_URL)

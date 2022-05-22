@@ -1,3 +1,5 @@
+# TODO : add player turn, winner, etc. message to the image.
+
 from connect4 import Connect4
 from PIL import Image, ImageDraw
 
