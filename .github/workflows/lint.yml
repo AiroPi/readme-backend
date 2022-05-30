@@ -26,7 +26,9 @@ jobs:
 
       - name: Install dependencies
         id: install-deps
-        run: pip install -U mypy flake8
+        run: |
+          pip install -U mypy flake8
+          pip install -U -r requirements.txt
 
       - name: Run mypy
         if: ${{ always() && steps.install-deps.outcome == 'success' }}
