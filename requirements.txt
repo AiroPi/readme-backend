@@ -1,4 +1,5 @@
 fastapi==0.78.0
 uvicorn[standart]==0.17.6
 Pillow==9.1.1
+types-Pillow==9.0.19
 connect4.py==1.0.3

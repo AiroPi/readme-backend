@@ -10,6 +10,7 @@ GITHUB_PROFILE_URL = "https://github.com/AiroPi"
 
 app = FastAPI()
 c4 = Connect4()
+
 if not os.path.exists("./data/"):
     os.mkdir("./data/")
 generate_image(c4, "./data/connect4.png")
