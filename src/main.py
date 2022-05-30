@@ -1,7 +1,7 @@
 import os
 from time import time
 
-from connect4 import Connect4
+from connect4 import ColumnFull, Connect4
 from fastapi import FastAPI, Query
 from fastapi.responses import FileResponse, RedirectResponse
 
@@ -36,9 +36,13 @@ def play(
     global last_play_time
 
     if not c4.is_over:
-        c4.play(column)
-        generate_image(c4, "./data/connect4.png")
-        last_play_time = time()
+        try:
+            c4.play(column)
+        except ColumnFull:
+            pass
+        else:
+            generate_image(c4, "./data/connect4.png")
+            last_play_time = time()
     return RedirectResponse(GITHUB_PROFILE_URL)
 
 
