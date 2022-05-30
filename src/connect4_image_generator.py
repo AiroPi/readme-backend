@@ -1,4 +1,4 @@
-from connect4 import Connect4
+from connect4 import Connect4, Players
 from PIL import Image, ImageDraw, ImageFont
 
 TOKEN_DIAMETER = 70
@@ -28,9 +28,12 @@ def generate_image(connect4: Connect4, filename: str):
                            7, fill=BOX_COLOR)
 
     if connect4.is_over:
-        msg = f"Winner : {'red' if connect4.get_turn() == 1 else 'yellow'}"
+        if connect4.winner == Players.NONE:
+            msg = "It's a tie!"
+        else:
+            msg = f"Winner : {'red' if connect4.turn == Players.ONE else 'yellow'}"
     else:
-        msg = f"Player turn : {'red' if connect4.get_turn() == 1 else 'yellow'}"
+        msg = f"Player turn : {'red' if connect4.turn == Players.ONE else 'yellow'}"
 
     w, h = draw.textsize(msg, font=font)
 
@@ -52,6 +55,6 @@ def generate_image(connect4: Connect4, filename: str):
                   INTERSPACE + i * (TOKEN_DIAMETER + INTERSPACE),
                   INTERSPACE + j * (TOKEN_DIAMETER + INTERSPACE) + TOKEN_DIAMETER,
                   INTERSPACE + i * (TOKEN_DIAMETER + INTERSPACE) + TOKEN_DIAMETER)
-            draw.ellipse(xy, fill=TOKENS_COLORS[case])
+            draw.ellipse(xy, fill=TOKENS_COLORS[case.value])
 
     im.save(filename)
