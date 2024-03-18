@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  readme-backend:
+    image: airopi/readme-backend
+    build:
+      dockerfile: ./Dockerfile
+      target: production
+    ports:
+      - 80:80
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app
+        - action: sync
+          path: ./readme.example.html
+          target: /app/readme.example.html
+        - action: rebuild
+          path: ./requirements.txt

@@ -1,0 +1,4 @@
+services:
+  readme-backend:
+    build:
+      target: debug

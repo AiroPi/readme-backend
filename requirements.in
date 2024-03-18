@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+Pillow
+types-Pillow
+connect4.py==1.0.3
