@@ -2,7 +2,8 @@ import os
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, RedirectResponse
-from src.routers import connect4_router
+
+from routers import connect4_router
 
 GITHUB_PROFILE_URL = os.environ["GITHUB_PROFILE_URL"]
 
