@@ -70,6 +70,9 @@ def get_img(text: str):
 
 @router.get("/play/{i}/{j}")
 def play(i: int, j: int):
+    if game.game_over:
+        return RedirectResponse(GITHUB_PROFILE_URL)
+
     if flag_mode:
         if (i, j) in game.flags:
             game.flags.remove((i, j))
