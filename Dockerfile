@@ -31,5 +31,5 @@ FROM base as debug
 ENV DEBUG=1
 ENV LOG_LEVEL=DEBUG
 ENV GITHUB_PROFILE_URL="http://localhost/readme.md"
-COPY ./readme.html ./-
+COPY ./readme.html ./
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]

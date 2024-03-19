@@ -6,3 +6,5 @@ __pycache__/
 data/
 
 .DS_Store
+readme.html
+minesweeper.md

@@ -8,17 +8,18 @@ from fastapi.responses import FileResponse, RedirectResponse
 
 GITHUB_PROFILE_URL = os.environ["GITHUB_PROFILE_URL"]
 BASE_PATH = Path("./resources/images/minesweeper/png/")
-
+SIZE = (10, 12)
+BOMBS = 20
 
 router = APIRouter(prefix="/ms")
-game = minesweeper.Minesweeper((14, 16), 35)
+game = minesweeper.Minesweeper(SIZE, BOMBS)
 flag_mode = False
 
 
 def get_header():
     return {
         "Cache-Control": "no-cache, max-age=0",
-        "Last-Modified": datetime.now().strftime("%a, %d %b %Y %H:%M:%S %Z"),
+        "Last-Modified": datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT"),
     }
 
 
@@ -94,7 +95,7 @@ def flag_toggle():
 @router.get("/reset")
 def reset():
     global game
-    game = minesweeper.Minesweeper((14, 16), 34)
+    game = minesweeper.Minesweeper(SIZE, BOMBS)
     return RedirectResponse(GITHUB_PROFILE_URL)
 
 
