@@ -21,5 +21,5 @@ services:
           target: /app/readme.example.html
         - action: rebuild
           path: ./requirements.txt
-    environ:
+    environment:
       - GITHUB_PROFILE_URL="https://github.com/AiroPi"
