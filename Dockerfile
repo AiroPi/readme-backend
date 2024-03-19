@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/var/cache/apk/ \
     --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     : \
-    && apk add gcc musl-dev linux-headers \
+    && apk add gcc musl-dev linux-headers git \
     && pip install -U pip \
     && pip install -U -r requirements.txt \
     && :

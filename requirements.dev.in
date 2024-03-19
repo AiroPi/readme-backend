@@ -2,3 +2,4 @@ pip-tools
 pyright
 ruff
 tox
+types-Pillow

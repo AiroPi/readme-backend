@@ -3,12 +3,13 @@ import os
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, RedirectResponse
 
-from routers import connect4_router
+from routers import connect4_router, minesweeper_router
 
 GITHUB_PROFILE_URL = os.environ["GITHUB_PROFILE_URL"]
 
 app = FastAPI()
 app.include_router(connect4_router.router)
+app.include_router(minesweeper_router.router)
 
 
 @app.get("/")
@@ -20,4 +21,4 @@ if os.getenv("DEBUG"):
 
     @app.get("/readme.md")
     def get_readme():
-        return FileResponse("./readme.example.html")
+        return FileResponse("./readme.html")

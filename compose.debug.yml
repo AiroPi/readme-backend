@@ -2,3 +2,5 @@ services:
   readme-backend:
     build:
       target: debug
+    environ:
+      - GITHUB_PROFILE_URL="http://localhost/readme.md"
