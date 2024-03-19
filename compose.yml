@@ -6,8 +6,6 @@ services:
     build:
       dockerfile: ./Dockerfile
       target: production
-    ports:
-      - 80:80
     develop:
       watch:
         - action: sync
