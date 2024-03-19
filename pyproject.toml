@@ -19,7 +19,6 @@ line-length = 120
 indent-width = 4
 target-version = "py312"
 src = ["src"]
-exclude = ["bin/msgfmt.py", "alembic/**"]
 
 [tool.ruff.lint]
 select = [
