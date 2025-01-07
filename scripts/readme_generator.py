@@ -19,9 +19,9 @@ def generate_minesweeper_markdown() -> str:
     markdown: list[list[str]] = [
         [
             f'[<img height="50px" src="{BASE_URL}/ms/img/flag-toggle"/>]({BASE_URL}/ms/toggle-flag)',
-            '<img height="50px" width="75px" src="/static/ms/header"/>',
+            f'<img height="50px" width="75px" src="{BASE_URL}/static/ms/header.png"/>',
             f'[<img height="50px" src="{BASE_URL}/ms/img/face"/>]({BASE_URL}/ms/reset)',
-            '<img height="50px" width="75px" src="/static/ms/header"/>',
+            f'<img height="50px" width="75px" src="{BASE_URL}/static/ms/header.png"/>',
             f'[<img height="50px" src="{BASE_URL}/ms/img/undo"/>]({BASE_URL}/ms/undo)',
         ]
     ]

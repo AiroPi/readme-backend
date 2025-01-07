@@ -54,7 +54,7 @@ def response_img(img: bytes):
 
 
 def redirect_to_github():
-    return RedirectResponse(GITHUB_PROFILE_URL)
+    return RedirectResponse(f"{GITHUB_PROFILE_URL}#minesweeper")
 
 
 @router.get("/img/{i}/{j}")

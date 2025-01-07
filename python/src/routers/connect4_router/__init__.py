@@ -35,14 +35,14 @@ def play(column: int = Query(title="The column ID you want to play to.", ge=0, l
         else:
             generate_board(c4)
             last_play_time = time()
-    return RedirectResponse(GITHUB_PROFILE_URL)
+    return RedirectResponse(f"{GITHUB_PROFILE_URL}#connect4")
 
 
 @router.get("/reset")
 def reset():
     if not c4.is_over and time() - last_play_time < 300:
-        return RedirectResponse(GITHUB_PROFILE_URL)
+        return RedirectResponse(f"{GITHUB_PROFILE_URL}#connect4")
 
     c4.reset()
     generate_board(c4)
-    return RedirectResponse(GITHUB_PROFILE_URL)
+    return RedirectResponse(f"{GITHUB_PROFILE_URL}#connect4")
