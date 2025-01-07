@@ -33,7 +33,7 @@ ENV PATH="/app/.venv/bin:$PATH"
 ENV PYTHONUNBUFFERED=0
 
 FROM base AS production
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["hypercorn", "main:app", "-b", "0.0.0.0:80"]
 
 FROM base AS debug
 COPY --parents ./scripts/readme_generator.py ./templates/README.md ./
