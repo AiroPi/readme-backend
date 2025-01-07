@@ -1,11 +1,9 @@
-import hashlib
 import os
-from datetime import datetime
 from pathlib import Path
 
 import minesweeper
 from fastapi import APIRouter, Response
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import RedirectResponse
 
 GITHUB_PROFILE_URL = os.environ["GITHUB_PROFILE_URL"]
 BASE_PATH = Path("./resources/images/minesweeper/png/")
@@ -35,20 +33,24 @@ FACE_LOSE = load_image(BASE_PATH / "face_lose.png")
 DIGITS = {i: load_image(BASE_PATH / f"{i}.png") for i in range(9)}
 
 
-def get_header(etag: str = ""):
+def get_header():
     return {
         "Cache-Control": "no-cache, max-age=0",
         # "Last-Modified": datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT"),
-        "ETag": etag,
+        # "ETag": etag,
     }
 
 
-def response_img(img: str):
-    return RedirectResponse(f"/static/ms/{img}.png")
-    # return Response("abc")
-    etag = hashlib.md5(img).hexdigest()  # noqa: S324
-
-    return Response(img, media_type="image/png", headers=get_header(etag))
+def response_img(img: bytes):
+    """
+    Maybe some optimisations could be done here.
+    I'm pretty sure that the request *could* be cached but without being cached.
+    Like -> if the content didn't change, don't send it again, otherwise send it.
+    Also, the tiles are "shared" between the image, so maybe there is a way for the browser to reuse the same image.
+    I don't want to dig more into this, but it's a thought.
+    """
+    # etag = hashlib.md5(img).hexdigest()
+    return Response(img, media_type="image/png", headers=get_header())
 
 
 def redirect_to_github():
@@ -59,13 +61,13 @@ def redirect_to_github():
 def get_board_img(i: int, j: int):
     if (i, j) in game.revealed:
         if game.board[i][j] == -1:
-            return response_img("mine_red")
-        return response_img(str(game.board[i][j]))
+            return response_img(RED_MINE)
+        return response_img(DIGITS[game.board[i][j]])
     if game.game_over and game.board[i][j] == -1:
-        return response_img("mine")
+        return response_img(MINE)
     if (i, j) in game.flags:
-        return response_img("flag")
-    return response_img("closed")
+        return response_img(FLAG)
+    return response_img(CLOSED)
 
 
 @router.get("/img/{text}")
@@ -73,18 +75,18 @@ def get_img(text: str):
     match text:
         case "flag-toggle":
             if flag_mode:
-                return response_img("flag.png")
+                return response_img(FLAG)
             else:
-                return response_img("deactivated_flag.png")
+                return response_img(DEACTIVATED_FLAG)
         case "header":
-            return response_img("header.png")
+            return response_img(HEADER)
         case "undo":
-            return response_img("undo.png")
+            return response_img(UNDO)
         case "face":
             if game.game_over:
-                return response_img("face_lose.png")
+                return response_img(FACE_LOSE)
             else:
-                return response_img("face.png")
+                return response_img(FACE)
         case _:
             return 404
 

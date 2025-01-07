@@ -2,6 +2,6 @@ services:
   readme-backend:
     image: ghcr.io/airopi/readme-backend:master
     volumes:
-      - data:/app/data
+      - ./data:/app/data
     environment:
       GITHUB_PROFILE_URL: "https://github.com/AiroPi"
