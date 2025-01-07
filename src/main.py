@@ -1,7 +1,7 @@
 import os
 
 from fastapi import FastAPI
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 
 from routers import connect4_router, minesweeper_router
 
@@ -21,4 +21,10 @@ if os.getenv("DEBUG"):
 
     @app.get("/readme.md")
     def get_readme():
-        return FileResponse("./readme.html")
+        from markdown import markdown
+
+        with open("./debug_pages/minesweeper.md") as f:
+            markdown_text = f.read()
+        return HTMLResponse(markdown(markdown_text))
+
+        # return FileResponse("./readme.html")

@@ -75,10 +75,7 @@ def play(i: int, j: int):
         return RedirectResponse(GITHUB_PROFILE_URL)
 
     if flag_mode:
-        if (i, j) in game.flags:
-            game.flags.remove((i, j))
-        else:
-            game.add_flag(i, j)
+        game.toggle_flag(i, j)
     else:
         if (i, j) not in game.flags:
             game.play(i, j)

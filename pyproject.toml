@@ -1,24 +1,61 @@
+# https://docs.astral.sh/uv/concepts/projects/config/#configuring-projects
+[project]
+name = "readme-backend"
+version = "1.0"
+requires-python = ">=3.12"
+dependencies = [
+    #
+    "fastapi",
+    "uvicorn",
+    "Pillow",
+    "connect4.py==1.0.3",
+    "minesweeper @ git+https://github.com/AiroPi/minesweeper",
+]
+
+
+[project.optional-dependencies]
+debug = ["markdown"]
+
+# https://docs.astral.sh/uv/concepts/projects/
+[tool.uv]
+dev-dependencies = [
+    # "uv",
+    "pyright",
+    "ruff",
+    "tox",
+    "tox-uv",
+    "types-Pillow",
+]
+
+
+# https://microsoft.github.io/pyright/#/
+[tool.pyright]
+typeCheckingMode = "strict"
+
+
+# https://tox.wiki/en/latest/
 [tool.tox]
-legacy_tox_ini = """
-[tox]
-skipsdist = true
+envlist = ["py312"]
 
-[testenv]
-deps = 
-    -r requirements.txt
-    -r requirements.dev.txt
-commands =
-    # pytest
-    ruff format --check src
-    ruff check src
-    pyright src/
-"""
+[tool.tox.env_run_base]
+runner = "uv-venv-lock-runner"
+description = "run all checks on the code"
+extras = ["dev"]
+commands = [
+    #fmt
+    ["ruff", "format", "--check", "src"],
+    ["ruff", "check", "src"],
+    ["pyright", "src"],
+]
 
+
+# https://docs.astral.sh/ruff/
 [tool.ruff]
 line-length = 120
 indent-width = 4
 target-version = "py312"
 src = ["src"]
+exclude = ["bin"]
 
 [tool.ruff.lint]
 select = [
@@ -59,9 +96,9 @@ select = [
 ]
 
 ignore = [
-    "E501",   # line too long (we relate on the formater)
-    "N818",   # Error suffix for exceptions names
-    "PIE796", # Enum contains duplicate value
+    "E501", # line too long (we relate on the formater)
+    "N818", # Error suffix for exceptions names
+    # "PIE796", # Enum contains duplicate value
     "TRY003", # Avoid specifying long messages outsides the exception class
     "ISC001", # To avoid conflicts with the formatter
 ]
@@ -74,7 +111,3 @@ skip-magic-trailing-comma = false
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
-
-[tool.setuptools.dynamic]
-dependencies = { file = ["requirements.in"] }
-optional-dependencies.dev = { file = ["requirements.dev.in"] }

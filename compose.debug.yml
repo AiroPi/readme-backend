@@ -1,8 +1,0 @@
-services:
-  readme-backend:
-    ports:
-      - 80:80
-    build:
-      target: debug
-    environment:
-      - GITHUB_PROFILE_URL="http://localhost/readme.md"

@@ -1,5 +1,0 @@
-fastapi
-uvicorn
-Pillow
-connect4.py==1.0.3
-git+https://github.com/AiroPi/minesweeper 

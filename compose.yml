@@ -1,11 +1,10 @@
-version: "3"
-
 services:
   readme-backend:
-    # image: airopi/readme-backend
     build:
       dockerfile: ./Dockerfile
-      target: production
+      target: debug
+      args:
+        EXTRA_DEBUG: "--extra debug"
     develop:
       watch:
         - action: sync
@@ -19,5 +18,7 @@ services:
           target: /app/readme.example.html
         - action: rebuild
           path: ./requirements.txt
+    ports:
+      - 80:80
     environment:
-      - GITHUB_PROFILE_URL="https://github.com/AiroPi"
+      GITHUB_PROFILE_URL: "http://localhost/readme.md"
