@@ -29,6 +29,7 @@ var HIGHLIGHT_WIN_COLOR = color.RGBA{100, 255, 100, 255}
 var FACE font.Face
 
 func init() {
+	log.Print("Loaded!")
 	var err error
 	FACE, err = gg.LoadFontFace("./resources/fonts/Roboto-Regular.ttf", float64(FONT_SIZE))
 	if err != nil {

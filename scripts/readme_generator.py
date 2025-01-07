@@ -36,8 +36,19 @@ def generate_minesweeper_markdown() -> str:
 
 
 def generate_connect4_markdown() -> str:
-    markdown = f'<img src="{BASE_URL}/connect4/image" width="240"/>'
-    return markdown
+    button = f'<img src="{BASE_URL}/static/connect4/button.png" width="40px"/>'
+    margin = f'<img src="{BASE_URL}/static/connect4/margin.png" width="2.5px"/>'
+
+    markdown = [
+        [
+            margin,
+            *[f"[{button}]({BASE_URL}/connect4/play?column={i})" for i in range(7)],
+            margin,
+        ],
+        [f'<img src="{BASE_URL}/connect4/image" width="285px"/>'],
+    ]
+
+    return "  \n".join("".join(row) for row in markdown)
 
 
 #     &nbsp;[1️⃣](https://readme.airopi.dev/connect4/play?column=0)&nbsp;&nbsp;&nbsp;

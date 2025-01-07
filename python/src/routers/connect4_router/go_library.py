@@ -2,17 +2,17 @@ from __future__ import annotations
 
 import os
 from collections.abc import Sequence
-from ctypes import CDLL, POINTER, Structure, c_longlong, c_uint8, c_void_p
+from ctypes import POINTER, Structure, c_longlong, c_uint8, c_void_p, cdll
 from typing import TYPE_CHECKING, ClassVar
 
 if TYPE_CHECKING:
     from connect4 import Connect4
 
 
-_path = os.path.abspath("./golang/connect4img.so")
+_path = os.path.abspath("./shared/connect4img.so")
 
 try:
-    _lib = CDLL(_path, mode=0x8)
+    _lib = cdll.LoadLibrary(_path)
     print("Library loaded successfully!")
 except OSError as e:
     print(f"Failed to load library: {e}")

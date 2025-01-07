@@ -8,17 +8,18 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./src
+          path: ./python/src
           target: /app
+        - action: rebuild
+          path: ./golang/src
         - action: sync
           path: ./resources
           target: /app/resources
-        - action: sync
-          path: ./readme.example.html
-          target: /app/readme.example.html
         - action: rebuild
-          path: ./requirements.txt
+          path: uv.lock
     ports:
       - 80:80
+    volumes:
+      - ./data:/app/data
     environment:
       GITHUB_PROFILE_URL: "http://localhost/readme.md"

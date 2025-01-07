@@ -6,7 +6,7 @@ requires-python = ">=3.12"
 dependencies = [
     #
     "fastapi",
-    "uvicorn",
+    "hypercorn",
     "Pillow",
     "connect4.py==1.0.3",
     "minesweeper @ git+https://github.com/AiroPi/minesweeper",
