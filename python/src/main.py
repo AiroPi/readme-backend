@@ -17,13 +17,13 @@ def read_root():
     return RedirectResponse(GITHUB_PROFILE_URL)
 
 
-if os.getenv("DEBUG"):
+if os.environ.get("DEBUG", False):
 
     @app.get("/readme.md")
     def get_readme():
         from markdown import markdown
 
-        with open("./debug_pages/minesweeper.md") as f:
+        with open("./README.out.md") as f:
             markdown_text = f.read()
         return HTMLResponse(markdown(markdown_text))
 
