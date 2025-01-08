@@ -29,7 +29,6 @@ var HIGHLIGHT_WIN_COLOR = color.RGBA{100, 255, 100, 255}
 var FACE font.Face
 
 func init() {
-	log.Print("Loaded!")
 	var err error
 	FACE, err = gg.LoadFontFace("./resources/fonts/Roboto-Regular.ttf", float64(FONT_SIZE))
 	if err != nil {
@@ -39,7 +38,6 @@ func init() {
 
 //export GenerateBoard
 func GenerateBoard(board [][]int, isOver bool, winner int, turn int, winPositions [][]int) {
-	log.Print(winPositions)
 	const width = 7*(TOKEN_DIAMETER+INTERSPACE) + INTERSPACE
 	const heigh = 6*(TOKEN_DIAMETER+INTERSPACE) + INTERSPACE + BOX_HEIGHT
 	dc := gg.NewContext(
@@ -99,7 +97,7 @@ func GenerateBoard(board [][]int, isOver bool, winner int, turn int, winPosition
 		}
 	}
 
-	err := dc.SavePNG("./data/connect4.png") // TODO
+	err := dc.SavePNG("./data/connect4.png") // TODO: allow to customise the path
 	if err != nil {
 		log.Fatalf("could not save to file: %+v", err)
 	}

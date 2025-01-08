@@ -28,5 +28,3 @@ if os.environ.get("DEBUG", False):
         with open("./README.out.md") as f:
             markdown_text = f.read()
         return HTMLResponse(markdown(markdown_text))
-
-        # return FileResponse("./readme.html")

@@ -18,16 +18,16 @@ OUTPUT = Path(args.output)
 def generate_minesweeper_markdown() -> str:
     markdown: list[list[str]] = [
         [
-            f'[<img height="50px" src="{BASE_URL}/ms/img/flag-toggle"/>]({BASE_URL}/ms/toggle-flag)',
-            f'<img height="50px" width="75px" src="{BASE_URL}/static/ms/header.png"/>',
-            f'[<img height="50px" src="{BASE_URL}/ms/img/face"/>]({BASE_URL}/ms/reset)',
-            f'<img height="50px" width="75px" src="{BASE_URL}/static/ms/header.png"/>',
-            f'[<img height="50px" src="{BASE_URL}/ms/img/undo"/>]({BASE_URL}/ms/undo)',
+            '[<img height="50px" src="{{ BASE_URL }}/ms/img/flag-toggle"/>]({{ BASE_URL }}/ms/toggle-flag)',
+            '<img height="50px" width="75px" src="{{ BASE_URL }}/static/ms/header.png"/>',
+            '[<img height="50px" src="{{ BASE_URL }}/ms/img/face"/>]({{ BASE_URL }}/ms/reset)',
+            '<img height="50px" width="75px" src="{{ BASE_URL }}/static/ms/header.png"/>',
+            '<img height="50px" src="{{ BASE_URL }}/static/ms/undo.png"/>',
         ]
     ]
     for i in range(10):
         row: list[str] = [
-            f'[<img width="25px" src="{BASE_URL}/ms/img/{i}/{j}"/>]({BASE_URL}/ms/play/{i}/{j})'
+            f'[<img width="25px" src="{{{{ BASE_URL }}}}/ms/img/{i}/{j}"/>]({{{{ BASE_URL }}}}/ms/play/{i}/{j})'
             for j in range(12)
         ]
         markdown.append(row)
@@ -36,30 +36,35 @@ def generate_minesweeper_markdown() -> str:
 
 
 def generate_connect4_markdown() -> str:
-    button = f'<img src="{BASE_URL}/static/connect4/button.png" width="40px"/>'
-    margin = f'<img src="{BASE_URL}/static/connect4/margin.png" width="2.5px"/>'
+    button = '<img src="{{ BASE_URL }}/static/connect4/button.png" width="40px"/>'
+    margin = '<img src="{{ BASE_URL }}/static/connect4/margin.png" width="2.5px"/>'
 
     markdown = [
         [
             margin,
-            *[f"[{button}]({BASE_URL}/connect4/play?column={i})" for i in range(7)],
+            *[
+                f"[{button}]({{{{ BASE_URL }}}}/connect4/play?column={i})"
+                for i in range(7)
+            ],
             margin,
         ],
-        [f'<img src="{BASE_URL}/connect4/image" width="285px"/>'],
+        ['<img src="{{ BASE_URL }}/connect4/img/board" width="285px"/>'],
+        [
+            '[<img src="{{ BASE_URL }}/connect4/img/restart" width="285px"/>]({{ BASE_URL }}/connect4/restart)'
+        ],
     ]
 
     return "  \n".join("".join(row) for row in markdown)
-
-
-# Restart : [🔄](https://readme.airopi.dev/connect4/reset)
 
 
 def main():
     with TEMPLATE.open() as f:
         template = f.read()
 
-    template = template.replace("{{MINESWEEPER}}", generate_minesweeper_markdown())
-    template = template.replace("{{CONNECT4}}", generate_connect4_markdown())
+    template = template.replace("{{ MINESWEEPER }}", generate_minesweeper_markdown())
+    template = template.replace("{{ CONNECT4 }}", generate_connect4_markdown())
+
+    template = template.replace("{{ BASE_URL }}", BASE_URL)
 
     with OUTPUT.open("w") as f:
         f.write(template)
