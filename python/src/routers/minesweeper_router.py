@@ -19,6 +19,7 @@ DEACTIVATED_FLAG = load_image(BASE_PATH / "deactivated_flag.png")
 CLOSED = load_image(BASE_PATH / "closed.png")
 FACE = load_image(BASE_PATH / "face.png")
 FACE_LOSE = load_image(BASE_PATH / "face_lose.png")
+FACE_WIN = load_image(BASE_PATH / "face_win.png")
 
 DIGITS = {i: load_image(BASE_PATH / f"{i}.png") for i in range(9)}
 
@@ -45,10 +46,13 @@ def get_img(text: str):
             else:
                 return png_response(DEACTIVATED_FLAG)
         case "face":
-            if game.game_over:
-                return png_response(FACE_LOSE)
-            else:
-                return png_response(FACE)
+            match game.state:
+                case minesweeper.GameState.LOST:
+                    return png_response(FACE_LOSE)
+                case minesweeper.GameState.WON:
+                    return png_response(FACE_WIN)
+                case _:
+                    return png_response(FACE)
         case _:
             return 404
 
