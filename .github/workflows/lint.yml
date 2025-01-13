@@ -1,23 +1,23 @@
 name: lint
 
 on:
-  # workflow_dispatch: 
   push:
   pull_request:
     types: [ opened, reopened, synchronize ]
 
 jobs:
   check:
+    name: check ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-
-    name: check ${{ matrix.python-version }}
+    defaults:
+      run:
+        working-directory: ./python
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          path: 'python'
       - name: Install latest version of uv
         uses: astral-sh/setup-uv@v5
       - name: Install tox
