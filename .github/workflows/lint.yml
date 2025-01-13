@@ -1,40 +1,26 @@
 name: lint
 
 on:
-  workflow_dispatch: 
-  # push:
-  # pull_request:
-  #   types: [ opened, reopened, synchronize ]
+  push:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
 
 jobs:
   check:
+    name: check ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        python-version: [ '3.10', '3.x' ]
-
-    name: check ${{ matrix.python-version }}
+    defaults:
+      run:
+        working-directory: ./python
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Set up CPython ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        id: install-deps
-        run: |
-          pip install -U mypy flake8
-          pip install -U -r requirements.txt
-
-      - name: Run mypy
-        if: ${{ always() && steps.install-deps.outcome == 'success' }}
-        run: python3 -m mypy ./src/
-
-      - name: Run flake8
-        if: ${{ always() && steps.install-deps.outcome == 'success' }}
-        run: flake8 ./src/
+      - name: Install latest version of uv
+        uses: astral-sh/setup-uv@v5
+      - name: Install tox
+        run: uv sync --only-group tox --frozen --python 3.13
+      - name: Run tox for python ${{ matrix.python-version }}
+        run: uv run tox -e py${{ matrix.python-version }}

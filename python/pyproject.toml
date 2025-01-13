@@ -16,6 +16,13 @@ dependencies = [
 [project.optional-dependencies]
 debug = ["markdown"]
 
+# https://docs.astral.sh/uv/concepts/projects/dependencies/#development-dependencies
+[dependency-groups]
+dev = [{ include-group = "lint" }, { include-group = "tox" }]
+lint = ["pyright", "ruff"]
+tox = ["tox", "tox-uv"]
+
+
 # https://docs.astral.sh/uv/concepts/projects/
 [tool.uv]
 dev-dependencies = [
@@ -35,7 +42,7 @@ typeCheckingMode = "strict"
 
 # https://tox.wiki/en/latest/
 [tool.tox]
-envlist = ["py312"]
+envlist = ["py313"]
 
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
