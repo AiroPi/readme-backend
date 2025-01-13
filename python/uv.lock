@@ -167,8 +167,8 @@ wheels = [
 
 [[package]]
 name = "minesweeper"
-version = "1.2.0"
-source = { git = "https://github.com/AiroPi/minesweeper#9cb298ff407cfd9869a3b5c592b0568e6cc763cd" }
+version = "1.2.2"
+source = { git = "https://github.com/AiroPi/minesweeper#caa89e62511815f7c89a9613316c8be624b7fcb4" }
 dependencies = [
     { name = "typing-extensions" },
 ]
@@ -359,6 +359,14 @@ dev = [
     { name = "tox-uv" },
     { name = "types-pillow" },
 ]
+lint = [
+    { name = "pyright" },
+    { name = "ruff" },
+]
+tox = [
+    { name = "tox" },
+    { name = "tox-uv" },
+]
 
 [package.metadata]
 requires-dist = [
@@ -377,6 +385,14 @@ dev = [
     { name = "tox" },
     { name = "tox-uv" },
     { name = "types-pillow" },
+]
+lint = [
+    { name = "pyright" },
+    { name = "ruff" },
+]
+tox = [
+    { name = "tox" },
+    { name = "tox-uv" },
 ]
 
 [[package]]
