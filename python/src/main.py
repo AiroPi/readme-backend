@@ -23,7 +23,10 @@ if os.environ.get("DEBUG", False):
 
     @app.get("/readme.md")
     def get_readme():
-        from markdown import markdown
+        try:
+            from markdown import markdown
+        except ImportError:
+            return "Markdown module not installed!"
 
         with open("./README.out.md") as f:
             markdown_text = f.read()
